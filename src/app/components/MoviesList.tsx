@@ -5,7 +5,7 @@ import MovieCard from "./MovieCard";
 import { Skeleton } from "@/components/ui/skeleton";
 
 
-const MoviesList = ({data, hasNextPage, fetchNextPage, isFetchingNextPage, status}) => {
+const MoviesList = ({data, hasNextPage, fetchNextPage, isFetchingNextPage, status} : any) => {
   const { ref, inView } = useInView();
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const [SelectedMovie, setSelectedMovie] = useState<number | undefined>()
@@ -42,10 +42,10 @@ const MoviesList = ({data, hasNextPage, fetchNextPage, isFetchingNextPage, statu
         {
           (status === 'success') && 
             <>
-              {data.pages.map((page, i) => (
+              {data.pages.map((page:any, i:number) => (
                 <Fragment key={i}>
                   {
-                    page?.results.map((movie, index) => (
+                    page?.results.map((movie:any, index:number) => (
                       <MovieCard
                         key={index}
                         movie={movie}

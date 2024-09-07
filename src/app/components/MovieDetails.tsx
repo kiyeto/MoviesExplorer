@@ -6,6 +6,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar} from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from "react";
+import { DialogTitle } from "@radix-ui/react-dialog";
 
 const getMovieDetails = async (id: number) => {
     const options = {
@@ -19,10 +20,9 @@ const getMovieDetails = async (id: number) => {
         const response = await axios.request(options)
         return response.data
     }
-    catch {((err) => {
-        throw new Error('Failed to fetch movie details, try again later ', err)
-      })
-    }
+    catch (err){
+        throw new Error('Failed to fetch movie details, try again later ' + err)
+      }
 }
 
 const MovieDetails = ({ isOpen, onClose, movieId} : {
@@ -30,12 +30,6 @@ const MovieDetails = ({ isOpen, onClose, movieId} : {
     onClose:(open: boolean) => void,
     movieId: number | undefined}
 )=> {
-    
-    const [backdropError, setBackdropError] = useState(false)
-    const [posterError, setPosterError] = useState(false)
-
-    const handleBackdropError = () => setBackdropError(true)
-    const handlePosterError = () => setPosterError(true)
 
     const { data, isPending, isError, error, isSuccess } = useQuery({
         queryKey:['movie', movieId],
@@ -43,17 +37,10 @@ const MovieDetails = ({ isOpen, onClose, movieId} : {
         enabled: movieId !== undefined
     })
 
-    useEffect(() => {
-        return () => {
-            setBackdropError(false)
-            setPosterError(false)
-        }
-    },[])
-
-
 return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-        <DialogContent className="max-w-full w-10/12 max-md:h-[80%] p-0 border-none rounded-xl">
+        <DialogContent className="max-w-full w-10/12 max-md:h-[80%] p-0 border-none rounded-xl" aria-describedby={undefined}>
+        <DialogTitle className="hidden"></DialogTitle>
             {isPending &&
                 <div className="w-full min-h-[780px] flex flex-col space-y-3 px-4 py-5 justify-center items-center">
                     <Skeleton className="h-[350px] w-11/12 rounded-xl" />
@@ -82,15 +69,14 @@ return (
                                 src={`https://image.tmdb.org/t/p/w1280${data.backdrop_path}`}
                                 alt={data.title}
                                 fill={true}
-                                objectFit="cover"
-                                className="rounded-xl"
+                                className="rounded-xl object-cover bg-center"
                             />
                         </div>
                         <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-transparent to-black opacity-70 rounded-xl"></div>
                         <div className="absolute bottom-0 left-0 w-full p-4 sm:p-6 md:p-8 lg:p-10 text-white">
                             <div className="flex flex-col sm:flex-row items-start sm:items-end gap-4 mb-4">
                                 <Image
-                                    src={`https://image.tmdb.org/t/p/w500${data.poster_path}`}
+                                    src={`https://image.tmdb.org/t/p/w342${data.poster_path}`}
                                     alt={data.title}
                                     width={120}
                                     height={180}
@@ -122,7 +108,7 @@ return (
                                 <div>
                                     <h2 className='text-lg font-bold italic mb-2'>Genres: </h2>
                                     <div className='flex flex-wrap gap-2'>
-                                    {data.genres.map(genre => (
+                                    {data.genres.map((genre:any) => (
                                         <span key={genre.id} className='px-2 py-1 bg-gray-700 bg-opacity-50 border border-1 border-white rounded-full text-xs sm:text-sm'>
                                         {genre.name}
                                         </span> 

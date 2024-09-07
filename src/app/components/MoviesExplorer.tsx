@@ -66,7 +66,7 @@ const MoviesExplorer = () => {
         debounce((newquery) => setQuery(newquery), 300)
     ,[])
 
-    const handleSearch = (e) => {
+    const handleSearch = (e: { target: { value: any } }) => {
         const text = e.target.value
         debounced(text)
     }
