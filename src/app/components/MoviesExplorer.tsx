@@ -79,7 +79,7 @@ const MoviesExplorer = () => {
           <span className='relative text-rose-600 text-7xl z-20'>M</span>
         </span>OVIES <span className='text-rose-600'>E</span>XPLORER
       </h1>
-        <div className="mb-12 py-4 w-full bg-[#0c2238] flex justify-center rounded-xl">
+        <div className="mb-12 py-4 w-full bg-[#0c2238] flex justify-center">
             <Input type="search"
                 placeholder="Search for a movie"
                 className="rounded-xl text-slate-300 w-1/2 bg-[#233a50] border-background border-2 focus-visible:ring-0 focus-visible:ring-offset-0"
