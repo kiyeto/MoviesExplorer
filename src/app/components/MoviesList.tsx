@@ -3,6 +3,7 @@ import { useInView } from 'react-intersection-observer';
 import MovieDetails from "./MovieDetails";
 import MovieCard from "./MovieCard";
 import { Skeleton } from "@/components/ui/skeleton";
+import Loader from "./skeleton";
 
 
 const MoviesList = ({data, hasNextPage, fetchNextPage, isFetchingNextPage, status} : any) => {
@@ -20,20 +21,20 @@ const MoviesList = ({data, hasNextPage, fetchNextPage, isFetchingNextPage, statu
     if (inView && hasNextPage) {
       fetchNextPage();
     }
-  }, [inView]);
+    
+  }, [inView, hasNextPage]);
 
   return (
     <>
+      <div className="w-11/12 flex mx-auto flex-row flex-wrap justify-center gap-5">
       <MovieDetails 
         isOpen={isDialogOpen}
         onClose={() => setIsDialogOpen(false)}
         movieId={SelectedMovie}
       />
-
-      <div className="w-11/12 flex mx-auto flex-row flex-wrap justify-center gap-5">
         {
-          isFetchingNextPage &&
-          <div>Loading ... </div>
+          (status ==='pending') &&
+          <Loader />
         }
         {
           (status === 'error') &&
@@ -57,7 +58,7 @@ const MoviesList = ({data, hasNextPage, fetchNextPage, isFetchingNextPage, statu
               ))}
               <div className="mx-auto w-11/12 flex justify-center" ref={ref}>
                 {
-                isFetchingNextPage &&
+                (hasNextPage && isFetchingNextPage) && (
                   <div className="flex flex-row gap-5">
                     <div className="flex flex-col space-y-3 ">
                       <Skeleton className="h-[350px] w-[250px] lg:w-[320px] rounded-xl" />
@@ -80,9 +81,8 @@ const MoviesList = ({data, hasNextPage, fetchNextPage, isFetchingNextPage, statu
                         <Skeleton className="h-4 w-[175px] lg:w-[250px]" />
                       </div>
                     </div>
-                   
                   </div>
-                }
+                )}
               </div>
             </>
           }

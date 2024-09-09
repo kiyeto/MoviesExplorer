@@ -4,8 +4,7 @@ import axios from "axios";
 import Image from 'next/image'
 import { Skeleton } from "@/components/ui/skeleton"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar} from '@fortawesome/free-solid-svg-icons';
-import { useEffect, useState } from "react";
+import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { DialogTitle } from "@radix-ui/react-dialog";
 
 const getMovieDetails = async (id: number) => {
@@ -39,10 +38,10 @@ const MovieDetails = ({ isOpen, onClose, movieId} : {
 
 return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-        <DialogContent className="max-w-full w-10/12 max-md:h-[80%] p-0 border-none rounded-xl" aria-describedby={undefined}>
+        <DialogContent className="max-w-full w-10/12 min-h-[650px] p-0 border-0 rounded-xl" aria-describedby={undefined}>
         <DialogTitle className="hidden"></DialogTitle>
             {isPending &&
-                <div className="w-full min-h-[780px] flex flex-col space-y-3 px-4 py-5 justify-center items-center">
+                <div className="w-full min-h-[750px] flex flex-col space-y-3 px-4 py-5 justify-center items-center">
                     <Skeleton className="h-[350px] w-11/12 rounded-xl" />
                     <div className="space-y-2">
                         <Skeleton className="h-4 w-[250px]" />
@@ -64,7 +63,7 @@ return (
             {isSuccess && (
                 <>
                     <div className="relative w-full overflow-hidden">
-                        <div className="w-full h-[100vh] sm:h-[80vh] md:h-[50vh] lg:h-[60vh] relative">
+                        <div className="w-full h-full relative">
                             <Image
                                 src={`https://image.tmdb.org/t/p/w1280${data.backdrop_path}`}
                                 alt={data.title}
@@ -80,7 +79,7 @@ return (
                                     alt={data.title}
                                     width={120}
                                     height={180}
-                                    className="rounded-lg shadow-lg"
+                                    className="rounded-xl shadow-xl"
                                 />
                                 <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold">{data.title}</h1>
                             </div>
@@ -105,15 +104,15 @@ return (
                                         {data.vote_average.toFixed(1)}
                                     </span>
                                 </div>
-                                <div>
-                                    <h2 className='text-lg font-bold italic mb-2'>Genres: </h2>
-                                    <div className='flex flex-wrap gap-2'>
+                                <div className="flex justify-between items-center">
+                                    <h2 className='text-lg font-bold italic'>Genres: </h2>
+                                    <span className='flex flex-wrap gap-2'>
                                     {data.genres.map((genre:any) => (
-                                        <span key={genre.id} className='px-2 py-1 bg-gray-700 bg-opacity-50 border border-1 border-white rounded-full text-xs sm:text-sm'>
+                                        <span key={genre.id} className='px-2 py-1 bg-gray-700 bg-opacity-50 border border-1 border-rose-600 rounded-full text-xs sm:text-sm'>
                                         {genre.name}
                                         </span> 
                                     ))}
-                                    </div>
+                                    </span>
                                 </div>
                                 </div>
                             </div>

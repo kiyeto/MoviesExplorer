@@ -12,10 +12,7 @@ export default function Home() {
   return (
     <>
       <QueryClientProvider client={queryClient}>
-        <div>
-          <h1 className='text-5xl text-center font-bold my-4'> Movies Explorer </h1>
           <MoviesExplorer />
-        </div>
       </QueryClientProvider>
     </>
   );
