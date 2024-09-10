@@ -1,44 +1,10 @@
 import { useCallback, useState } from "react"
 import MoviesList from "./MoviesList"
 import { useInfiniteQuery } from "@tanstack/react-query"
-import axios from "axios"
+import { getMovies, searchforMovies } from "../api/movies"
 import { Input } from "@/components/ui/input"
 import { debounce } from "lodash"
 import Loader from "./skeleton"
-
-const getMovies = async ({ pageParam }: {pageParam:number}) => {
-    const options = {
-      method: "GET",
-      url: `https://api.themoviedb.org/3/movie/popular?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}&language=en-US&page=${pageParam}`,
-      headers: {
-        accept: 'application/json',
-      }
-    }
-    try {
-      const response = await axios.request(options)
-      return response.data
-  
-    }
-    catch (err) {
-        throw new Error('Failed to fetch movies, try again later ' + err)
-    }
-  }
-
-  const searchforMovies = async (query: string, pageParam: number) => {
-    const options = {
-        method: "GET",
-        url: `https://api.themoviedb.org/3/search/movie?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}&query=${query}&language=en-US&page=${pageParam}`,
-        headers: {
-          accept: 'application/json',
-        }
-    }
-    try {
-        const response = await axios.request(options)
-        return response.data
-    } catch (e) {
-        throw new Error(`Error: ${e}`)
-    }
-}
 
 const MoviesExplorer = () => {
     const [query, setQuery] = useState('')

@@ -20,7 +20,7 @@ const MovieCard = ({movie, openDialog} : {movie:Movie, openDialog:Function}) => 
             </div>
             <CardContent className="w-full px-0 rounded-t-xl">
                 <Image
-                    src={`https://image.tmdb.org/t/p/w342${movie.poster_path}`}
+                    src={process.env.NEXT_PUBLIC_API_IMAGE_POSTER + movie.poster_path}
                     alt={movie.title}
                     className="w-full h-96 object-cover rounded-t-xl"
                     width={500}

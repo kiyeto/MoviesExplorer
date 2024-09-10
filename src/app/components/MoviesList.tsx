@@ -5,7 +5,6 @@ import MovieCard from "./MovieCard";
 import { Skeleton } from "@/components/ui/skeleton";
 import Loader from "./skeleton";
 
-
 const MoviesList = ({data, hasNextPage, fetchNextPage, isFetchingNextPage, status} : any) => {
   const { ref, inView } = useInView();
   const [isDialogOpen, setIsDialogOpen] = useState(false)

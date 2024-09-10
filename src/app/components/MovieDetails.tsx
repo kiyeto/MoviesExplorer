@@ -1,28 +1,11 @@
 import { Dialog, DialogContent } from "@/components/ui/dialog"
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
+import { getMovieDetails } from "../api/movies";
 import Image from 'next/image'
 import { Skeleton } from "@/components/ui/skeleton"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { DialogTitle } from "@radix-ui/react-dialog";
-
-const getMovieDetails = async (id: number) => {
-    const options = {
-        method: 'GET',
-        url: `https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}`,
-        headers: {
-            accept: 'application/json'
-        }
-    };
-    try {
-        const response = await axios.request(options)
-        return response.data
-    }
-    catch (err){
-        throw new Error('Failed to fetch movie details, try again later ' + err)
-      }
-}
 
 const MovieDetails = ({ isOpen, onClose, movieId} : {
     isOpen: boolean | undefined,
@@ -65,7 +48,7 @@ return (
                     <div className="relative w-full overflow-hidden">
                         <div className="w-full h-full relative">
                             <Image
-                                src={`https://image.tmdb.org/t/p/w1280${data.backdrop_path}`}
+                                src={process.env.NEXT_PUBLIC_API_IMAGE_BACKDROP + data.backdrop_path}
                                 alt={data.title}
                                 fill={true}
                                 className="rounded-xl object-cover bg-center"
@@ -75,7 +58,7 @@ return (
                         <div className="absolute bottom-0 left-0 w-full p-4 sm:p-6 md:p-8 lg:p-10 text-white">
                             <div className="flex flex-col sm:flex-row items-start sm:items-end gap-4 mb-4">
                                 <Image
-                                    src={`https://image.tmdb.org/t/p/w342${data.poster_path}`}
+                                    src={process.env.NEXT_PUBLIC_API_IMAGE_POSTER + data.poster_path}
                                     alt={data.title}
                                     width={120}
                                     height={180}
