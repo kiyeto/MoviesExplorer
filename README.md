@@ -30,4 +30,10 @@ Happy movie browsing! 🍿✨
    Create a `.env` file in the root of your project and add your TMDB API key:
    ```
    NEXT_PUBLIC_TMDB_API_KEY=your_api_key_here
+
+   NEXT_PUBLIC_API_BASE_URL=https://api.themoviedb.org/3
+
+   NEXT_PUBLIC_API_IMAGE_POSTER=https://image.tmdb.org/t/p/w342
+
+   NEXT_PUBLIC_API_IMAGE_BACKDROP=https://image.tmdb.org/t/p/w1280
    ```
